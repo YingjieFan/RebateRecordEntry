@@ -7,6 +7,8 @@ package dataentrymain;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.text.SimpleDateFormat;
@@ -14,7 +16,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.swing.AbstractAction;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.KeyStroke;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -52,23 +57,106 @@ public class Interface extends javax.swing.JFrame {
 				if(selectedRowIndex==-1){
 					clearAllFields();
 				}else{
-					textAreaInstruction.setText("Click 'Edit' button to save modified record");
+					Font font = new Font("Verdana", Font.BOLD, 12);
+			        /*textAreaInstruction.setFont(font);
+			        textAreaInstruction.setForeground(Color.BLACK);
+					textAreaInstruction.setText("Click 'Edit' button to save modified record");*/
 					populateFields(selectedRowIndex);
 				}
 				
 			}
         	
         });
+        //Change the action when hitting enter to focus on First Name field so user can start editing
+        tableRecords.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "Enter");
+        tableRecords.getActionMap().put("Enter", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                //do something on JTable enter pressed
+            	fieldFN.requestFocus();
+            }
+        });
+        
+        //Change the behavior of TAB in jTable so user can switch focus to fields
+        tableRecords.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke(KeyEvent.VK_TAB, 0), "Tab");
+        tableRecords.getActionMap().put("Tab", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                //do something on JTable enter pressed
+            	fieldFN.requestFocus();
+            }
+        });
+        //Enable to toggle the check box using Enter
+        jCheckBoxProof.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "Enter");
+        jCheckBoxProof.getActionMap().put("Enter", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                //do something on JTable enter pressed
+            	if(jCheckBoxProof.isSelected()){
+            		jCheckBoxProof.setSelected(false);
+            	}else{
+            		jCheckBoxProof.setSelected(true);
+            	}
+            }
+        });
+        
+        //Enable the pressing of each button using Enter
+        buttonAdd.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "Enter");
+        buttonAdd.getActionMap().put("Enter", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                //do something on JTable enter pressed
+            	buttonAdd.doClick();
+            }
+        });
+        
+        buttonEdit.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "Enter");
+        buttonEdit.getActionMap().put("Enter", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                //do something on JTable enter pressed
+            	buttonEdit.doClick();
+            }
+        });
+        
+        buttonDelete.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "Enter");
+        buttonDelete.getActionMap().put("Enter", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                //do something on JTable enter pressed
+            	buttonDelete.doClick();
+            }
+        });
+        
+        buttonSave.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "Enter");
+        buttonSave.getActionMap().put("Enter", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                //do something on JTable enter pressed
+            	buttonSave.doClick();
+            }
+        });
         
         tableRecords.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-            	System.out.println("mouseClicked");
+            	selectedRowIndex=tableRecords.getSelectedRow();
+				if(selectedRowIndex==-1){
+					clearAllFields();
+				}else{
+					Font font = new Font("Verdana", Font.BOLD, 12);
+			        /*textAreaInstruction.setFont(font);
+			        textAreaInstruction.setForeground(Color.BLACK);
+					textAreaInstruction.setText("Click 'Edit' button to save modified record");*/
+					populateFields(selectedRowIndex);
+				}
+            	
+            	/*System.out.println("mouseClicked");
                 int row = tableRecords.rowAtPoint(evt.getPoint());
                 if (row<0) {
                 	selectedRowIndex=-1;
                    clearAllFields();
-                }
+                }*/
             }
         });
         
@@ -567,6 +655,7 @@ public class Interface extends javax.swing.JFrame {
             tableModel.fireTableDataChanged();
             textAreaInstruction.setText("Record saved successfully");
             clearAllFields();
+            fieldFN.requestFocus();
             System.out.println("Record added");
         }else if(!canAdd&&!utils.checkDupRecord(records, tmpRecord)){
         	
@@ -606,7 +695,7 @@ public class Interface extends javax.swing.JFrame {
     	records.set(rowIndex, modifiedRec);
     	textAreaInstruction.setText("Modified record saved");;
     	clearAllFields();
-    	
+    	fieldFN.requestFocus();
     }//GEN-LAST:event_buttonEditActionPerformed
 
     private void buttonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDeleteActionPerformed
@@ -616,6 +705,7 @@ public class Interface extends javax.swing.JFrame {
     	}else{
     		records.remove(rowIndex);
             tableModel.fireTableDataChanged();
+            fieldFN.requestFocus();
     	}
     	
 

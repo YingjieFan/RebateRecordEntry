@@ -27,7 +27,7 @@ public class Utility {
 			"City(Maximum 25 characters)",
 			"State(Maximum 2 characters)",
 			"Zip Code(Maximum 10 digits including '-')",
-			"Phone number(10 to 21 characters)",
+			"Phone number(10 to 21 characters and numeric)",
 			"Email(Maximum 60 characters and must contain '@' and '.')",
 			"Proof Of Purchase is always valid(Yes or no)",
 			"Date(Maximum 20 characters)"
@@ -200,6 +200,13 @@ public class Utility {
     private void checkPhone(){
     	int phoneIndex = Arrays.asList(fieldOrder).indexOf("phone");
     	String input = record.getPhone();
+    	try{
+    		Long.parseLong(input);
+    		//Integer.parseInt(input);
+    	}catch(NumberFormatException nfe){
+    		System.out.println(input);
+    		return;
+    	}
     	if(input.length()>9&&input.length()<21){
     		fieldInformation[phoneIndex]=1;
     		record.setPhone(input);
