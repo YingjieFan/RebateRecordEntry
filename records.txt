@@ -1,2 +1,2 @@
-kent;fan; ;asdf asdfa road; ;adfa;tx;12312;1231231231;af@asd.com;true;10/03/2015
-kent;fan; ;asdf asdfa road; ;adfa;tx;12312;1231231231;af@asd.com;true;10/03/2015
+Kent;Fan; ;1234 washington rd.; ;Plano;TX;75023;4692880451;kentfan54@gmail.com;true;10/03/2015
+David;Chan;I;14512 Cambell Rd.; ;Richardson;TX;75080;4692881412;yingjiefan.ad@gmail.com;false;10/05/2015

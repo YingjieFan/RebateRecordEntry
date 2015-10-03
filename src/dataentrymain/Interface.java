@@ -732,6 +732,7 @@ public class Interface extends javax.swing.JFrame{
     		records.remove(rowIndex);
             tableModel.fireTableDataChanged();
             fieldFN.requestFocus();
+            clearAllFields();
     	}
     	
 
