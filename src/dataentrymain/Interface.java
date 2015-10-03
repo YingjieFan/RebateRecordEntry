@@ -11,6 +11,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,6 +22,7 @@ import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -28,7 +32,7 @@ import javax.swing.event.ListSelectionListener;
  * @author Kent
  * This class is the Jframe class that host the interface. It maintains some interface related data and methods.
  */
-public class Interface extends javax.swing.JFrame {
+public class Interface extends javax.swing.JFrame{
     private List<Record> records = new ArrayList<>();
     private RecordTableModel tableModel;
     private int selectedRowIndex=-1;
@@ -45,10 +49,31 @@ public class Interface extends javax.swing.JFrame {
         tableModel = new RecordTableModel(records);
         initComponents();
         
+        //Add a window listener that warns user about unsaved entry when exit
+    	this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+    	this.addWindowListener(
+    			new WindowAdapter( )
+    	        {
+    	            public void windowClosing (WindowEvent e)
+    	            {
+    	            	
+    	            	//Save the changes to file 
+    	            	fileOp.saveFile(records);
+    	                String message = "Quit? (Unsaved entries will be lost)";
+    	                String title = "Warning";
+    	                int reply = JOptionPane.showConfirmDialog(null, message, title, JOptionPane.YES_NO_OPTION);
+    	                if (reply == JOptionPane.YES_OPTION)
+    	                {
+    	                    System.exit(0);
+    	                }
+
+    	            }
+    	        }
+    			);
         tableRecords.setModel(tableModel);
         tableRecords.setCellSelectionEnabled(false);
         tableRecords.setRowSelectionAllowed(true);
-        tableRecords.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+        /*tableRecords.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
 
 			@Override
 			public void valueChanged(ListSelectionEvent arg0) {
@@ -58,15 +83,15 @@ public class Interface extends javax.swing.JFrame {
 					clearAllFields();
 				}else{
 					Font font = new Font("Verdana", Font.BOLD, 12);
-			        /*textAreaInstruction.setFont(font);
+			        textAreaInstruction.setFont(font);
 			        textAreaInstruction.setForeground(Color.BLACK);
-					textAreaInstruction.setText("Click 'Edit' button to save modified record");*/
+					textAreaInstruction.setText("Click 'Edit' button to save modified record");
 					populateFields(selectedRowIndex);
 				}
 				
 			}
         	
-        });
+        });*/
         //Change the action when hitting enter to focus on First Name field so user can start editing
         tableRecords.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "Enter");
         tableRecords.getActionMap().put("Enter", new AbstractAction() {
@@ -144,10 +169,11 @@ public class Interface extends javax.swing.JFrame {
 				if(selectedRowIndex==-1){
 					clearAllFields();
 				}else{
-					Font font = new Font("Verdana", Font.BOLD, 12);
+					//Font font = new Font("Verdana", Font.BOLD, 12);
 			        /*textAreaInstruction.setFont(font);
 			        textAreaInstruction.setForeground(Color.BLACK);
-					textAreaInstruction.setText("Click 'Edit' button to save modified record");*/
+					*/
+					textAreaInstruction.setText("Click 'Edit' button to save modified record");
 					populateFields(selectedRowIndex);
 				}
             	
@@ -717,7 +743,7 @@ public class Interface extends javax.swing.JFrame {
     private void buttonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveActionPerformed
         // TODO add your handling code here:
     	fileOp.saveFile(records);
-    	this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    	//this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     	System.exit(0);
     }//GEN-LAST:event_buttonSaveActionPerformed
 
@@ -806,4 +832,5 @@ public class Interface extends javax.swing.JFrame {
     private javax.swing.JTable tableRecords;
     private javax.swing.JTextArea textAreaInstruction;
     // End of variables declaration//GEN-END:variables
+	
 }

@@ -21,12 +21,16 @@ import java.util.logging.Logger;
  *
  * @author Kent
  * The records.txt file path is defaulted to the root directory. If no existing file found a new file will be created.
+ * This class will accomplish file operation task. When the program initialize the we use getAllRecords() to get a List of records saved in the txt file.
+ * After that all the records are maintained in Interface.java for flexible operation. 
+ * When user hit exit, the file is saved to the record.txt file through saveFile() method.
  */
 public class FileOperation {
 
     private List<Record> records; 
     File file;
-
+    
+    //Public function return the List of records extracted from txt file
     public List<Record> getAllRecords() {
         return this.records;
     }
@@ -58,27 +62,27 @@ public class FileOperation {
             // append a newline character.
             for(Record record:records){
             bufferedWriter.write(record.getFirstName());
-            bufferedWriter.write(" ");
+            bufferedWriter.write(";");
             bufferedWriter.write(record.getLastName());
-            bufferedWriter.write(" ");
+            bufferedWriter.write(";");
             bufferedWriter.write(record.getMI());
-            bufferedWriter.write(" ");
+            bufferedWriter.write(";");
             bufferedWriter.write(record.getAddressLine1());
-            bufferedWriter.write(" ");
+            bufferedWriter.write(";");
             bufferedWriter.write(record.getAddressLine2());
-            bufferedWriter.write(" ");
+            bufferedWriter.write(";");
             bufferedWriter.write(record.getCity());
-            bufferedWriter.write(" ");
+            bufferedWriter.write(";");
             bufferedWriter.write(record.getState());
-            bufferedWriter.write(" ");
+            bufferedWriter.write(";");
             bufferedWriter.write(record.getZipcode());
-            bufferedWriter.write(" ");
+            bufferedWriter.write(";");
             bufferedWriter.write(record.getPhone());
-            bufferedWriter.write(" ");
+            bufferedWriter.write(";");
             bufferedWriter.write(record.getEmail());
-            bufferedWriter.write(" ");
+            bufferedWriter.write(";");
             bufferedWriter.write(String.valueOf(record.isProofAttached()));
-            bufferedWriter.write(" ");
+            bufferedWriter.write(";");
             bufferedWriter.write(record.getDate());
             bufferedWriter.newLine();           
             }
@@ -119,7 +123,7 @@ public class FileOperation {
             while (scanner.hasNextLine()) {
                 Record tmpRec = new Record();
                 String line = scanner.nextLine();
-                String[] temp = line.split(" ");
+                String[] temp = line.split(";");
                 tmpRec.setFirstName(temp[0]);
                 tmpRec.setLastName(temp[1]);
                 tmpRec.setMI(temp[2]);

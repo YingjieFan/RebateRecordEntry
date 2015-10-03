@@ -120,7 +120,7 @@ public class Utility {
     	if(input.length()<=1){
     		fieldInformation[MIIndex]=1;
     		if(input.length()==0){
-    			record.setMI("N/A");
+    			record.setMI(" ");
     		}else{
     			record.setMI(input);
     		}
@@ -150,9 +150,9 @@ public class Utility {
     	if(input.length()<=35){
     		fieldInformation[add2Index]=1;
     		if(tempStr.length()==0){
-        		record.setAddressLine2("N/A");
+        		record.setAddressLine2(" ");
     		}else{
-    			record.setAddressLine1(input);
+    			record.setAddressLine2(input);
     		}
     		
     	}

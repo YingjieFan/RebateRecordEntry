@@ -1,1 +1,2 @@
-Kent Fan B N/A N/A Plano TX 75023 4692880451 asdfas@gamsd.com true 10/02/2015
+kent;fan; ;asdf asdfa road; ;adfa;tx;12312;1231231231;af@asd.com;true;10/03/2015
+kent;fan; ;asdf asdfa road; ;adfa;tx;12312;1231231231;af@asd.com;true;10/03/2015
